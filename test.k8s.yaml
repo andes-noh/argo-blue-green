@@ -18,8 +18,8 @@ spec:
     spec:
       containers:
         - name: rollout-demo
-          image: 361848949410.dkr.ecr.ap-northeast-2.amazonaws.com/cicd_demo:87
-          # image: 361848949410.dkr.ecr.ap-northeast-2.amazonaws.com/cicd_demo:88
+          # image: 361848949410.dkr.ecr.ap-northeast-2.amazonaws.com/cicd_demo:87
+          image: 361848949410.dkr.ecr.ap-northeast-2.amazonaws.com/cicd_demo:88
           ports:
             - containerPort: 3000
           resources: {}
