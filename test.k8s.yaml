@@ -3,23 +3,25 @@
 apiVersion: argoproj.io/v1alpha1     # apps/v1 대신 argoproj.io/v1alpha1을 사용한다
 kind: Rollout  # Deplyment 대신 Rollout을 사용한다
 metadata:
-  name: test-rollout-bluegreen
+  name: cicd-demo-bluegreen
   namespace: test
 spec:
   replicas: 2
   revisionHistoryLimit: 2
   selector:
     matchLabels:
-      app: test-rollout-bluegreen
+      app: cicd-demo-bluegreen
   template:
     metadata:
       labels:
-        app: test-rollout-bluegreen
+        app: cicd-demo-bluegreen
     spec:
       containers:
         - name: rollout-demo
+          image: argoproj/rollouts-demo:blue
+          # image: argoproj/rollouts-demo:green
           # image: 361848949410.dkr.ecr.ap-northeast-2.amazonaws.com/cicd_demo:87
-          image: 361848949410.dkr.ecr.ap-northeast-2.amazonaws.com/cicd_demo:88
+          # image: 361848949410.dkr.ecr.ap-northeast-2.amazonaws.com/cicd_demo:88
           ports:
             - containerPort: 3000
           resources: {}
@@ -28,10 +30,10 @@ spec:
   strategy:
     blueGreen:
       #activeService는 이전의 배포된 Blue 서비스
-      activeService: test-rollout-bluegreen-active
+      activeService: cicd-demo-bluegreen-svc-active
       
       #previewService는 새롭게 배포될 Green 서비스
-      previewService: test-rollout-bluegreen-preview
+      previewService: cicd-demo-bluegreen-svc-preview
       
       #autoPromotioEnabled 옵션은 Blue/Green 배포를 자동으로 진행할 것인지 여부. false 옵션을 사용해 수동으로 지정
       autoPromotionEnabled: false
@@ -40,7 +42,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: test-rollout-bluegreen-active
+  name: cicd-demo-bluegreen-svc-active
   namespace: test
 spec:
   ports:
@@ -53,7 +55,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: test-rollout-bluegreen-preview
+  name: cicd-demo-bluegreen-svc-preview
   namespace: test
 spec:
   ports:
