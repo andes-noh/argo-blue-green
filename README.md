@@ -13,6 +13,8 @@ kubectl argo rollouts list rollout -n 'namespace'
  kubectl argo rollouts promote -n 'namespace' 'spec.selector.app'
 ```
 
+## 확인
+
 ## References
 
 - 
